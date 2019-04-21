@@ -1,0 +1,41 @@
+DEBUT
+INTERFACE
+COMP amal : Bouton(item);
+PROP
+a:int;
+a,b:boolean;
+EVT
+clck(a) {If a <> b Then a:=b and nb +1 }
+clck(a) {If a <> b Then a:=b and nb +1 }
+clck(a) {If a <> b Then a:=b and nb +1 }
+clck(a) {If a <> b Then a:=b and nb +1 }
+COMP amal1 : Bouton;
+PROP
+a:{a,b,c};
+a,b:boolean;
+EVT
+clck(a) {If a <> b Then a:=b and nb +1 ;
+a:=b}
+clck(a) {If a <> b Then a:=b and nb +1 }
+clck(a) {If a <> b Then a:=b and nb +1 }
+clck(a) {If a <> b Then a:=b and nb +1 }
+COMP amal2 : Bouton;
+PROP
+a:int;
+a,b:boolean;
+EVT
+clck(a) {If a <> b Then a:=b and nb +1 }
+clck(a) {If a <> b Then a:=b and nb +1 }
+clck(a) {If a <> b Then a:=b and nb +1 }
+clck(a) {If a <> b Then a:=b and nb +1 }
+INITIALISATIONS
+position :: position :=k;
+position :: position :=k;
+position :: position :=k;
+position :: position :=k;
+ACTIONS
+{
+DbClick(k);
+{DbClick(k);DbClick(k)}
+}
+FIN

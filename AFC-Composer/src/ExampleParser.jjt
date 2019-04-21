@@ -1,0 +1,188 @@
+
+options {
+  IGNORE_CASE = false;
+  VISITOR=true;
+  MULTI=true;
+}
+
+PARSER_BEGIN(ExampleParser)
+ import java.util.*;
+  import java.io.*;
+
+  public class ExampleParser {
+   
+	}
+PARSER_END(ExampleParser)
+  //STRUCTURES AND CHARACTERS TO SCAPE
+SKIP : {
+ " "
+|  "\t"
+|  "\n"
+|  "\r"
+|  <"rem" (~["\n","\r"])* ("\n" | "\r" | "\r\n")>
+}
+//STATIC TOKENS
+TOKEN : {
+    <NUMBER: (<DIGIT>)+>
+   |  <#DIGIT: ["0"-"9"]>
+  
+}
+TOKEN : {
+ <COMP: "COMP">
+|<PROP: "PROP">
+|<EVT: "EVT"|"EVET">
+|  <ACTIONS: "ACTIONS">
+|  <INITIALISATIONS: "INITIALISATIONS">
+|  <INTERFACE: "INTERFACE">
+|  <DEBUT: "DEBUT">
+|  <IF: "If">
+|  <THEN: "Then">
+|  <AND: "and">
+|  <FIN: "FIN">
+  
+}
+TOKEN : {
+ <TYPEv: "int"|"boolean"|"bool">
+|<TypeC :"Fenêtre"| "Boite Dialogue"| "Panel"| "Bouton"|"Champs Texte"|"Combo Box"| "Liste Déroulante"| "Case A cochet"|"Bouton Radio"|"Icône">
+| <TypeA: "DbClick" |"Click"|"Drag"|"Drop"|"ChrKeyPress"|"NumKeyPress"|"EntrerKeyPress">
+| <TypeFen: "ClickBtFerm" |"ClickBtRed"|"ClickBtArg"|"ClickTitre">
+ 
+}
+ //IDENTIFIER TOKEN
+TOKEN : {
+ <IDENTIFIER: <LETTER>(<LETTER>|<DIGIT>)*>
+|  <#LETTER: (["a"-"z","A"-"Z"])>
+}
+
+TOKEN : {
+ <Tpoint: ":">
+|  <PV: ";">
+| <AFF :":=">
+| <VR:",">
+| <compare:"<"|">"|"<="|">="|"<>"|"=">
+ | < plus:"+" >
+  | < minus:"-" >
+ | < op2:"*"|"/" >
+ 
+ | < opA :"~">
+ 
+  
+}
+SimpleNode commence():{}
+{
+  start()
+  {
+    return jjtThis;
+  }
+}
+void start(): {}
+{
+  <DEBUT><INTERFACE>(comp())+init()<ACTIONS>action()<FIN>
+}
+//Composant
+void comp():  {
+ Token tok1;
+ Token tok2;
+ ArrayList<String > ls=new ArrayList<String>();
+ }
+{
+  
+  <COMP>tok1=<IDENTIFIER><Tpoint>tok2=<TypeC>("("<IDENTIFIER>")")?<PV>prop() { ls=evt(); }
+  {jjtThis.value=tok1.image;
+   ST.put(tok1.image,new SymbolTable(tok1.image,tok2.image));
+   map.put(tok1.image,ls);
+  }
+}
+//PROPRIETE
+void prop(): {}
+{
+  < PROP>listV()
+}
+
+void listV(): { }
+{
+  (
+    var()<PV>)*
+}
+
+void var(): {}
+{
+<IDENTIFIER>lv()<Tpoint>(<TYPEv>|enu())
+}
+void enu(): {}
+{
+  "{"<IDENTIFIER>(<VR><IDENTIFIER>)+"}"
+}
+void lv(): {}
+{
+ (<VR><IDENTIFIER>)*
+}
+//Evenement
+ArrayList<String > evt (): {
+String tok1;
+ Token tok2;
+ ArrayList<String > ls=new ArrayList<String>();
+ }
+{
+  <EVT>(tok1=listE() { ls.add(tok1);})*
+  {
+    return ls;
+  }
+}
+String listE():
+ {
+ Token tok1;
+ 
+ }
+{
+ (tok1=<TypeFen>|tok1=< TypeA >)("(" < IDENTIFIER>")")?"{"(ifstmt()|affect())(<PV>(ifstmt()|affect()))*"}"
+  {
+    return tok1.image; }
+}
+void ifstmt(): { }
+{
+  <IF>cond()<THEN>((affect()(<AND>affect())*)|ifstmt())
+}
+void affect (): { }
+{
+  expr()(<AFF>expr())?
+}
+void expr (): { }
+{
+  terme()((<plus>|<minus>)terme())*
+}
+ void cond() :{}
+{
+  expr()<compare>expr()
+}
+ 
+void terme(): {}
+{
+  facteur()(<op2>facteur())*
+}
+
+void facteur() :{}
+{
+  "(" expr() ")" | <IDENTIFIER> | <NUMBER>
+}
+/********************************************/
+//INITIALISATIONS
+void init(): { }
+{
+  <INITIALISATIONS>(<IDENTIFIER><Tpoint><Tpoint><IDENTIFIER><AFF><IDENTIFIER><PV>)+
+}
+/******************************************/
+//Actions
+void action(): {
+  Token tok1;
+  Token tok2;
+  Token tok3;
+  ArrayList ls=new ArrayList();
+  }
+{
+    "{"action()((tok3=<PV>|tok3=<plus>|tok3=<opA>){listeOp.add(tok3.image);}action())*"}"/*{listeOp.add("}");}*/((tok3=<PV>|tok3=<plus>|tok3=<opA>){listeOp.add(tok3.image);}"{"action()(tok3=<PV>|tok3=<plus>|tok3=<opA>) {listeOp.add(tok3.image);}action()"}")? |tok2=<TypeA> {System.out.println(tok2.image);}"("tok1=<IDENTIFIER>")"
+     {if(map1.containsKey(tok1.image)) map1.get(tok1.image).add(tok2.image);
+      else {ls.add(tok2.image);  map1.put(tok1.image,ls);} }
+     
+}
+ 

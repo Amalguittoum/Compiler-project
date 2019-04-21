@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="576.0" prefWidth="920.0" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainController">
+   <children>
+      <ImageView fitHeight="632.0" fitWidth="920.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@bg_surface_beach.png" />
+         </image>
+      </ImageView>
+      <Button layoutX="331.0" layoutY="76.0" mnemonicParsing="false" onAction="#on_button" prefHeight="25.0" prefWidth="113.0" style="-fx-background-color: #15259d;" text="Select a .ihm file" textFill="#f5f5ea">
+         <font>
+            <Font name="Calibri Bold" size="14.0" />
+         </font></Button>
+      <TextField id="link" fx:id="link" layoutX="55.0" layoutY="76.0" prefHeight="27.0" prefWidth="276.0" promptText="choose a file..." />
+      <Label layoutX="337.0" layoutY="-1.0" prefHeight="57.0" prefWidth="328.0" text="AFComposer" textFill="#2a1bd0">
+         <font>
+            <Font name="Cooper Black" size="48.0" />
+         </font>
+      </Label>
+      <TextArea id="result" fx:id="result" layoutX="24.0" layoutY="168.0" prefHeight="309.0" prefWidth="507.0" promptText="Result">
+         <font>
+            <Font name="Cambria Math" size="36.0" />
+         </font></TextArea>
+      <Button layoutX="651.0" layoutY="178.0" mnemonicParsing="false" onAction="#on_clickb" prefHeight="25.0" prefWidth="221.0" style="-fx-background-color: #15259d;" text="Voir le fichier .gui" textFill="#dedfe8">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Button layoutX="646.0" layoutY="246.0" mnemonicParsing="false" onAction="#on_click2" prefHeight="25.0" prefWidth="229.0" style="-fx-background-color: #15259d;" text="Voir le fichier .aef" textFill="#f2eaea">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Button layoutX="649.0" layoutY="310.0" mnemonicParsing="false" onAction="#on_click1" prefHeight="25.0" prefWidth="229.0" style="-fx-background-color: #15259d;" text="Voir l'arbre syntaxique" textFill="#f5f3f3" />
+   </children>
+</AnchorPane>

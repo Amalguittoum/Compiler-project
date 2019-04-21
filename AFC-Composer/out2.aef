@@ -1,0 +1,6 @@
+Automate des actions :
+     null     Click     DbClick     Drag     Drop     ChrKeyPress     NumKeyPress     EntrerKeyPress     ClickBtFerm     ClickBtRed     ClickBtArg
+     1     2     null     null     null     null     null     null     null     null     null
+     2     null     3     null     null     null     null     null     null     null     null
+     3     null     4     null     null     null     null     null     null     null     null
+     4     null     null     null     null     null     null     null     null     null     null
